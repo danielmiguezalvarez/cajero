@@ -1,5 +1,6 @@
 package next.tarjeta.repository;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.repository.CrudRepository;
@@ -11,6 +12,6 @@ import next.tarjeta.entity.CreditCard;
 @Repository
 public interface CreditCardRepository extends CrudRepository<CreditCard,UUID>{
 
-	public CreditCard findByNumber(@Param("number")String name);
+	public Optional<CreditCard> findByNumber(@Param("number")String name);
 
 }
