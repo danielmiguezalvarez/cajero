@@ -39,7 +39,7 @@ public class MvcConfig extends WebSecurityConfigurerAdapter {
 		.permitAll()
 		.anyRequest().authenticated()
 		.and()
-		.addFilterBefore(new JwtAuthenticationFilter("/creditCard/open",authenticationManager()), UsernamePasswordAuthenticationFilter.class)
+		.addFilterBefore(new JwtAuthenticationFilter("/creditCard/active",authenticationManager()), UsernamePasswordAuthenticationFilter.class)
 		.addFilterBefore(new JwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);		
 	}
 	

@@ -15,6 +15,7 @@ import org.passay.WhitespaceRule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import next.cuenta.service.impl.AccountService;
 import next.tarjeta.dto.CreditCardDto;
 import next.tarjeta.entity.CreditCard;
 import next.tarjeta.exceptions.RepeatedCreditCard;
@@ -29,6 +30,9 @@ public class CreditCardService implements ICreditCardService {
 	private static final String CREDITO = "CREDITO";
 	@Autowired
 	CreditCardRepository creditCardRepository;
+	
+	@Autowired
+	AccountService accountService;
 
 	@Override
 	public void registerCreditCard(CreditCardDto creditCard) throws Exception {
@@ -36,6 +40,7 @@ public class CreditCardService implements ICreditCardService {
 		validateCreditCard(creditCard);
 		validatePassword(creditCard);
 		saveCreditCard(creditCard);
+		
 	}
 
 
@@ -72,12 +77,15 @@ public class CreditCardService implements ICreditCardService {
 
 
 	private Boolean existCreditCard(String number) {
-		var safebox = creditCardRepository.findByNumber(number);
-		return safebox.isPresent();
+		var creditCard = creditCardRepository.findByNumber(number);
+		return creditCard.isPresent();
 	}
 
-	private CreditCard saveCreditCard(CreditCardDto creditCard) {		
-		return creditCardRepository.save(getCreditCardFromDto(creditCard));
+	private void saveCreditCard(CreditCardDto creditCardDto) {			
+		var creditCard = getCreditCardFromDto(creditCardDto);
+		var newCreditCard = creditCardRepository.save(creditCard);
+		creditCardRepository.save(addAccountToCreditCard(newCreditCard));
+		
 	}
 
 
@@ -86,6 +94,15 @@ public class CreditCardService implements ICreditCardService {
 		creditCard.setNumber(creditCardDto.getNumber());
 		creditCard.setPassword(creditCardDto.getPassword());
 		creditCard.setType(creditCardDto.getType());
+		
+		return creditCard;
+	}
+
+
+	private CreditCard addAccountToCreditCard(CreditCard creditCard) {
+		var account = accountService.genetateNewAccount();
+		creditCard.setAccount(account);
+		
 		return creditCard;
 	}
 

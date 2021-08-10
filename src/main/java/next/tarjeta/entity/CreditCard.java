@@ -8,13 +8,25 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+
+import next.cuenta.entity.Account;
 
 @Entity
 @Table(name = "credit_card")
 @EntityListeners(CreditCardListener.class)
 public class CreditCard {	
+
+	public Account getAccount() {
+		return account;
+	}
+
+	public void setAccount(Account account) {
+		this.account = account;
+	}
 
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,8 +39,11 @@ public class CreditCard {
     private String password;
     
 	private String type;
-
-
+	
+    @OneToOne
+    @JoinColumn(name = "id")
+    private Account account;  
+    
 	public String getNumber() {
 		return number;
 	}
