@@ -30,7 +30,7 @@ public class CreditCardRegisterController {
 			return ResponseEntity.ok("Registration completed");
 			
 		} catch (RepeatedCreditCard e) {
-			return new ResponseEntity<>("Safebox already exists", HttpStatus.CONFLICT);
+			return new ResponseEntity<>("Credit card already exists", HttpStatus.CONFLICT);
 		} catch (MalformedParametersException e) {
 			return new ResponseEntity<>("Malformed expected data", HttpStatus.UNPROCESSABLE_ENTITY);
 		} catch (ValidatePasswordExceptions ex1) {

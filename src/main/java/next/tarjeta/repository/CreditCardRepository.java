@@ -11,6 +11,6 @@ import next.tarjeta.entity.CreditCard;
 @Repository
 public interface CreditCardRepository extends CrudRepository<CreditCard,UUID>{
 
-	public CreditCard findByName(@Param("name")String name);
+	public CreditCard findByNumber(@Param("number")String name);
 
 }

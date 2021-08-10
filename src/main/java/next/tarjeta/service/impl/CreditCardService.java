@@ -71,8 +71,8 @@ public class CreditCardService implements ICreditCardService {
 	}
 
 
-	private Boolean existCreditCard(String name) {
-		var safebox = creditCardRepository.findByName(name);
+	private Boolean existCreditCard(String number) {
+		var safebox = creditCardRepository.findByNumber(number);
 		return safebox != null;
 	}
 
